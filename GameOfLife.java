@@ -52,6 +52,10 @@ public class GameOfLife extends Agent{
     private JFrame frame;
 
 	protected void setup(){
+        Object[] args = getArguments();
+        String arg = (String)args[0];
+        String[] coords = arg.split(" ");
+
 
         addBehaviour(new MyBehavior());
         int W = 50, H = 50;
@@ -69,14 +73,20 @@ public class GameOfLife extends Agent{
 
                 matrix[i][j] = button;
                 frame.add(button);
-                
+
             }
+        }
+
+        for (int i = 0; i < coords.length; i++){
+            String[] coord = coords[i].split("-");
+            int x = Integer.parseInt(coord[0]);
+            int y = Integer.parseInt(coord[1]);
+            matrix[x][y].setBackground(Color.green);
         }
 
         frame.setLayout(new GridLayout(W, H));
         frame.setSize(1000, 800);
         frame.setVisible(true);
-
     }
 }
 
