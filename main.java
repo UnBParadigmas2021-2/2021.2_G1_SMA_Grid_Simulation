@@ -6,7 +6,8 @@ import jade.wrapper.*;
 
 public class main extends Agent {
     protected void setup() {
-        System.out.println("Alo Mundo! ");
+        Object[] mainArgs = getArguments();
+        System.out.println("Alo Mundo! " + (String)mainArgs[0]);
         System.out.println("Meu nome: "+ getLocalName());
 
         Runtime rt = Runtime.instance();
@@ -15,11 +16,9 @@ public class main extends Agent {
 
         ContainerController cc = rt.createAgentContainer(p);
 
-        Object reference = new Object();
-
         Object args[] = new Object[1];
 
-        args[0] = reference;
+        args[0] = (String)mainArgs[0];
 
         AgentController dummy;
 
