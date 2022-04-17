@@ -9,8 +9,9 @@ import jade.lang.acl.*;
 class MyBehavior2 extends Behaviour
 {
 
-    private MyJButton matrix[][];
-    public MyBehavior2(MyJButton m[][]){
+    private ColloredJButton matrix[][];
+
+    public MyBehavior2(ColloredJButton m[][]){
         matrix = m;
     }
 
@@ -52,10 +53,8 @@ class MyBehavior2 extends Behaviour
     }
 }
 
-
-
-
-class MyJButton extends  JButton implements ActionListener{
+// Just the default Button 
+class ColloredJButton extends  JButton implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
@@ -63,16 +62,18 @@ class MyJButton extends  JButton implements ActionListener{
     }
 }
 
-public class GameOfLife extends Agent{
+public class GameOfLifeAgent extends Agent{
 
-    private MyJButton matrix[][];
+    private ColloredJButton matrix[][];
     private JFrame frame;
 
-	protected void setup(){
+    void setupGui(){
 
+        //TODO(make this parameters come from agent arguments)
         int W = 50, H = 50;
-        MyJButton button;
-        matrix = new MyJButton[W][H];
+
+        ColloredJButton button;
+        matrix = new ColloredJButton[W][H];
 
         frame = new JFrame("Game of Life");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +81,7 @@ public class GameOfLife extends Agent{
         for(int i = 0; i<W; ++i){
             for(int j = 0; j<H; ++j){
 
-                button = new MyJButton();
+                button = new ColloredJButton();
                 button.addActionListener(button);
 
                 matrix[i][j] = button;
@@ -89,11 +90,16 @@ public class GameOfLife extends Agent{
             }
         }
 
-        addBehaviour(new MyBehavior2(matrix));
-
         frame.setLayout(new GridLayout(W, H));
         frame.setSize(1000, 800);
         frame.setVisible(true);
+    }
+
+
+	protected void setup(){
+
+        setupGui();
+        addBehaviour(new MyBehavior2(matrix));
     }
 }
 
