@@ -10,16 +10,49 @@ interface GridElement{
 class NotifyGuiBehaviour extends Behaviour
 {
     static final int SLEEP_SECS = 1;
+    private enum AgentState {DEAD, ALIVE};
+    private AgentState state;
+
+    public NotifyGuiBehaviour()
+    {
+        state = AgentState.DEAD;
+    }
 
     public void action(){ 
         while(true){
 
-            GridElement element;
+
+            ACLMessage msg = myAgent.receive();
+
+            switch(state){
+                case DEAD:
+                    // verify if is a propose to be alive
+                    if(msg != null && msg.getPerformative() == ACLMessage.PROPOSE){
+                        String content = msg.getContent();
+
+                        if(content == "BE ALIVE")
+                            state = AgentState.ALIVE;
+                    }
+                case ALIVE:
+
+                    // respond query if this is alive
+                    if(msg != null && msg.getPerformative() == ACLMessage.QUERY_IF)
+                    {
+                        ACLMessage replyMessage = msg.createReply();
+
+                        replyMessage.setContent((state == AgentState.ALIVE)? "ALIVE" : "DEAD");
+
+                        myAgent.send(replyMessage);
+
+                    }
+
+                break;
+            }
 
             System.out.println("Notifying gui about new state");
 
             // Update my state on GUI
-            ACLMessage msg = new ACLMessage(ACLMessage.QUERY_IF);
+            msg = new ACLMessage(ACLMessage.QUERY_IF);
 
             msg.setContent("This is a message");
             msg.addReceiver(new AID("GUI", AID.ISLOCALNAME));

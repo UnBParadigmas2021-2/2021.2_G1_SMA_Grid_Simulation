@@ -6,46 +6,39 @@ import java.awt.*;
 import java.awt.event.*;
 import jade.lang.acl.*;
 
-class MyBehavior2 extends Behaviour
-{
+class GameOfLifeBehaviour extends Behaviour{
 
     private ColloredJButton matrix[][];
 
-    public MyBehavior2(ColloredJButton m[][]){
+    public GameOfLifeBehaviour(ColloredJButton m[][]){
         matrix = m;
     }
 
-    public void action()
-    {
-        while(true)
-        {
-            System.out.println("Comportamento do agente ativado");
+    public void action(){
+        while(true){
 
             ACLMessage msg = myAgent.receive();
 
-            if(msg != null)
-            {
-                AID sender = msg.getSender();
-                System.out.println(msg.getContent());
+            System.out.println("Comportamento do agente ativado");
 
+            // espera uma mensagem e pinta o quadrado
+            if(msg != null){
+                AID sender = msg.getSender();
                 String name = sender.getLocalName();
 
-                System.out.println("Name: " + name);
-                if(name == "Grid1" || true){
-
+                if(name.equals("Grid1")){
                     System.out.println("Behaviour tried to set a elment to green");
                     matrix[0][0].setBackground(Color.green);
-
                 }
-
-            }else
-                System.out.println("null msg");
+            }
 
             try{
                 Thread.sleep(1000);
             }catch(Exception ex){}
         }
     }
+
+
 
     public boolean done()
     {
@@ -80,13 +73,11 @@ public class GameOfLifeAgent extends Agent{
 
         for(int i = 0; i<W; ++i){
             for(int j = 0; j<H; ++j){
-
                 button = new ColloredJButton();
                 button.addActionListener(button);
 
                 matrix[i][j] = button;
                 frame.add(button);
-                
             }
         }
 
@@ -97,9 +88,8 @@ public class GameOfLifeAgent extends Agent{
 
 
 	protected void setup(){
-
         setupGui();
-        addBehaviour(new MyBehavior2(matrix));
+        addBehaviour(new GameOfLifeBehaviour(matrix));
     }
 }
 
