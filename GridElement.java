@@ -11,7 +11,7 @@ class NotifyGui extends Behaviour
         {
             System.out.println("Notifying gui about new state");
 
-            ACLMessage msg = new ACLMessage(ACLMessage.CFP);
+            ACLMessage msg = new ACLMessage(ACLMessage.QUERY_IF);
             msg.setContent("This is a meessage");
             msg.addReceiver(new AID("GUI", AID.ISLOCALNAME));
 

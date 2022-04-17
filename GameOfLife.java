@@ -9,6 +9,11 @@ import jade.lang.acl.*;
 class MyBehavior2 extends Behaviour
 {
 
+    private MyJButton matrix[][];
+    public MyBehavior2(MyJButton m[][]){
+        matrix = m;
+    }
+
     public void action()
     {
         while(true)
@@ -19,7 +24,19 @@ class MyBehavior2 extends Behaviour
 
             if(msg != null)
             {
+                AID sender = msg.getSender();
                 System.out.println(msg.getContent());
+
+                String name = sender.getLocalName();
+
+                System.out.println("Name: " + name);
+                if(name == "Grid1" || true){
+
+                    System.out.println("Behaviour tried to set a elment to green");
+                    matrix[0][0].setBackground(Color.green);
+
+                }
+
             }else
                 System.out.println("null msg");
 
@@ -53,7 +70,6 @@ public class GameOfLife extends Agent{
 
 	protected void setup(){
 
-        addBehaviour(new MyBehavior2());
         int W = 50, H = 50;
         MyJButton button;
         matrix = new MyJButton[W][H];
@@ -72,6 +88,8 @@ public class GameOfLife extends Agent{
                 
             }
         }
+
+        addBehaviour(new MyBehavior2(matrix));
 
         frame.setLayout(new GridLayout(W, H));
         frame.setSize(1000, 800);
