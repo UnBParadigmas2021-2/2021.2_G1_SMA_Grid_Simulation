@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import jade.lang.acl.*;
 
-class MyBehavior extends Behaviour
+class MyBehavior2 extends Behaviour
 {
 
     public void action()
@@ -15,19 +15,18 @@ class MyBehavior extends Behaviour
         {
             System.out.println("Comportamento do agente ativado");
 
-            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            ACLMessage msg = myAgent.receive();
 
-            msg.addReceiver(new AID("Test", AID.ISLOCALNAME));
-
-            myAgent.send(msg);
+            if(msg != null)
+            {
+                System.out.println(msg.getContent());
+            }else
+                System.out.println("null msg");
 
             try{
                 Thread.sleep(1000);
-            }catch(Exception ex)
-            {
-            }
+            }catch(Exception ex){}
         }
-
     }
 
     public boolean done()
@@ -35,6 +34,7 @@ class MyBehavior extends Behaviour
         return true;
     }
 }
+
 
 
 
@@ -53,7 +53,7 @@ public class GameOfLife extends Agent{
 
 	protected void setup(){
 
-        addBehaviour(new MyBehavior());
+        addBehaviour(new MyBehavior2());
         int W = 50, H = 50;
         MyJButton button;
         matrix = new MyJButton[W][H];
@@ -76,7 +76,6 @@ public class GameOfLife extends Agent{
         frame.setLayout(new GridLayout(W, H));
         frame.setSize(1000, 800);
         frame.setVisible(true);
-
     }
 }
 
