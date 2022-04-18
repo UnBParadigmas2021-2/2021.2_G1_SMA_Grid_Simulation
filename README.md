@@ -50,3 +50,14 @@ Escolha os parâmetros iniciais e visualize como as células interagem entre si,
 
 ## Outros 
 
+## Fontes
+
+MARTIN, Edwin. **Game of Life**. Disponível em: https://playgameoflife.com. Acesso em: 18 abr. 2022.
+
+NUMBERPHILE. **Inventing Game of Life (John Conway)**. Disponível em: https://www.youtube.com/watch?v=R9Plq-D1gEk. Acesso em: 18 abr. 2022.
+
+WIKIPEDIA. **Conway's Game of Life**. Disponível em: https://en.wikipedia.org/wiki/Conway's_Game_of_Life. Acesso em: 18 abr. 2022.
+
+GEEKSFORGEEKS. **Conway’s Game Of Life (Python Implementation)**. Disponível em: https://www.geeksforgeeks.org/conways-game-life-python-implementation/. Acesso em: 18 abr. 2022.
+
+JAVA Agent Development Framework. Disponível em: https://jade.tilab.com. Acesso em: 18 abr. 2022.
