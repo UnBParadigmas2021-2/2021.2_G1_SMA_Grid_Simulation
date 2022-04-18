@@ -2,6 +2,8 @@ import jade.core.*;
 import jade.lang.acl.*;
 import jade.core.behaviours.*;
 
+import java.lang.Math;
+
 interface GridElement{
     boolean isAlive();
     void canBeAlive();
@@ -10,17 +12,28 @@ interface GridElement{
 class NotifyGuiBehaviour extends Behaviour
 {
     static final int SLEEP_SECS = 1;
+    static final String GUIAgent = "GUI";
     private enum AgentState {DEAD, ALIVE};
     private AgentState state;
 
     public NotifyGuiBehaviour()
     {
-        state = AgentState.DEAD;
+
+        double randomN = Math.random();
+        if(randomN < 0.5){
+            state = AgentState.ALIVE;
+        }else
+            state = AgentState.DEAD;
+
+    }
+
+    private String getStateString(){
+        return (state == AgentState.ALIVE)? "ALIVE" : "DEAD";
     }
 
     public void action(){ 
+        stateChanged();
         while(true){
-
 
             ACLMessage msg = myAgent.receive();
 
@@ -30,8 +43,10 @@ class NotifyGuiBehaviour extends Behaviour
                     if(msg != null && msg.getPerformative() == ACLMessage.PROPOSE){
                         String content = msg.getContent();
 
-                        if(content == "BE ALIVE")
+                        if(content == "BE ALIVE"){
                             state = AgentState.ALIVE;
+                            stateChanged();
+                        }
                     }
                 case ALIVE:
 
@@ -39,29 +54,26 @@ class NotifyGuiBehaviour extends Behaviour
                     if(msg != null && msg.getPerformative() == ACLMessage.QUERY_IF)
                     {
                         ACLMessage replyMessage = msg.createReply();
-
-                        replyMessage.setContent((state == AgentState.ALIVE)? "ALIVE" : "DEAD");
-
+                        replyMessage.setContent(getStateString());
                         myAgent.send(replyMessage);
-
                     }
 
                 break;
             }
 
-            System.out.println("Notifying gui about new state");
-
-            // Update my state on GUI
-            msg = new ACLMessage(ACLMessage.QUERY_IF);
-
-            msg.setContent("This is a message");
-            msg.addReceiver(new AID("GUI", AID.ISLOCALNAME));
-
-            myAgent.send(msg);
-
             sleep();
         }
+    }
 
+    private void stateChanged(){
+        System.out.println("Agent " + myAgent.getLocalName() + " reporting new state to " + GUIAgent);
+
+        // Update my state on GUI
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.setContent(getStateString());
+        msg.addReceiver(new AID(GUIAgent, AID.ISLOCALNAME));
+
+        myAgent.send(msg);
     }
 
     void sleep(){

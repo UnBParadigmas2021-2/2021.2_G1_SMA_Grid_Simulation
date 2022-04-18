@@ -51,7 +51,8 @@ class ColloredJButton extends  JButton implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e){
-        this.setBackground(Color.green);
+        // TODO figure out how to make users set colors
+        //this.setBackground(Color.green);
     }
 }
 
