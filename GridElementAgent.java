@@ -11,7 +11,7 @@ interface GridElement{
 
 class NotifyGuiBehaviour extends Behaviour
 {
-    static final int SLEEP_SECS = 1;
+    static final int SLEEP_SECS = 5;
     static final String GUIAgent = "GUI";
     private enum AgentState {DEAD, ALIVE};
     private AgentState state;
@@ -39,29 +39,45 @@ class NotifyGuiBehaviour extends Behaviour
 
         while(true){
 
+            notifyNeighbors();
+
             // Reply all queries about the state
             MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.QUERY_IF);
-            while((msg = myAgent.receive(mt)) != null){
+
+            msg = myAgent.receive(mt);
+            while(msg != null){
+
+                System.out.println("I received a message QUERY_IF "+ msg.getContent());
                 ACLMessage replyMessage = msg.createReply();
                 replyMessage.setPerformative(ACLMessage.INFORM_IF);
                 replyMessage.setContent(getStateString());
 
                 myAgent.send(replyMessage);
+
+                msg = myAgent.receive(mt);
             }
+
+            sleep();
 
             // Couting all response
             mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM_IF);
             int count = 0;
-            while((msg = myAgent.receive(mt)) != null){
+            msg = myAgent.receive(mt);
+            while(msg != null){
+
+                System.out.println("I received a message "+ msg.getContent());
                 if(msg.getContent().equals("ALIVE"))
                     count++;
 
+                msg = myAgent.receive(mt);
             }
 
-            count = (int)(Math.random()*(5-1+1) + 1);
+            //TODO remover 
+            //count = (int)(Math.random()*(5-1+1) + 1);
+
             System.out.println("Count: " + Integer.toString(count));
 
-            if(state == AgentState.ALIVE || count <= 1 || count <=4){
+            if(state == AgentState.ALIVE || count <= 1 || count >=4){
                state = AgentState.DEAD;
                stateChanged();
             }else if(state == AgentState.DEAD || count == 3){
@@ -69,7 +85,6 @@ class NotifyGuiBehaviour extends Behaviour
                 stateChanged();
             }
 
-            sleep();
         }
     }
 
@@ -82,6 +97,38 @@ class NotifyGuiBehaviour extends Behaviour
         msg.addReceiver(new AID(GUIAgent, AID.ISLOCALNAME));
 
         myAgent.send(msg);
+    }
+
+    String generateAgentName(int x, int y){
+        return Integer.toString(x) + "-" + Integer.toString(y);
+    }
+
+    private void notifyNeighbors(){
+
+        String name = myAgent.getLocalName();
+        AID aidSendTo;
+
+        String args[] = name.split("-");
+        int cord1 = Integer.parseInt(args[0]);
+        int cord2 = Integer.parseInt(args[1]);
+
+        for(int i = -1; i <= 1; ++i)
+            for(int j = -1; j <= 1; ++j){
+                ACLMessage message = new ACLMessage(ACLMessage.QUERY_IF);
+
+                if(i!=0 || j!=0){
+                    aidSendTo = new AID(generateAgentName(cord1 + i , cord1 + j), AID.ISLOCALNAME);
+
+                    System.out.println("Notificando " + aidSendTo.getLocalName());
+
+
+                    message.addReceiver(aidSendTo);
+                    message.setContent("ALIVE?");
+
+                    myAgent.send(message);
+                }
+            }
+
     }
 
     void sleep(){
@@ -103,7 +150,7 @@ public class GridElementAgent extends Agent
         Object[] args = getArguments();
 
         // TODO will be greate to have system out in a logging structure
-        System.out.println("Grid Agent started");
+        System.out.println("GridElementAgent started with name: " + getLocalName());
 
         if(args != null && args.length > 0){
 
