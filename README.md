@@ -5,7 +5,8 @@
 **Paradigma**: Sistemas Multiagentes<br>
 
 ## Alunos
-|Matrícula | Aluno |
+
+| Matrícula | Aluno |
 | -- | -- |
 | 18/0100840  | Gabriel Azevedo Batalha        |
 | 18/0054082  | Marcelo Victor de Sousa Silva  |
@@ -15,7 +16,6 @@
 | 15/0058462  | Davi Antônio da Silva Santos   | 
 
 ## Sobre 
-Este projeto toma como base um jogo que tem se tornado muito popular na internet, o WORDLE que consiste em um jogo de palavras que tem como objetivo encontrar uma palavra a partir de chutes com palavras do mesmo tamanho e dicas que o próprio jogo oferece. 
 
 Este projeto toma como base um "jogo" chamado game of life, que é um autómato celular desenvolvido pelo matemático John Horton Conway. Este jogo consiste em uma série de células que se reproduzem ou morrem de acordo com 4 regras.
 
@@ -25,8 +25,6 @@ Este projeto toma como base um "jogo" chamado game of life, que é um autómato 
 4. Qualquer célula viva com dois ou três vizinhos vivos continua no mesmo estado para a próxima geração.
 
 ## Screenshots
-
-
 
 ## Instalação 
 **Linguagens**: Java<br>
