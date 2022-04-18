@@ -20,6 +20,10 @@ public class main extends Agent {
 
         args[0] = (String)mainArgs[0];
 
+        String arg = (String)args[0];
+        String[] argsSize = arg.split(" ");
+        String[] qntdPixelAgents = argsSize[0].split("-");
+
         AgentController dummy;
 
         try {
@@ -28,8 +32,8 @@ public class main extends Agent {
 
             dummy.start();
 
-            for(int i = 0; i < 10; ++i){
-                for(int j = 0; j < 10; ++j){
+            for(int i = 0; i < Integer.parseInt(qntdPixelAgents[0]); ++i){
+                for(int j = 0; j < Integer.parseInt(qntdPixelAgents[1]); ++j){
                     AgentController agent = cc.createNewAgent(Integer.toString(i) + "-" + Integer.toString(j), "GridElementAgent", null);
                     agent.start();
                 }

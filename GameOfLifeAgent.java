@@ -71,9 +71,13 @@ public class GameOfLifeAgent extends Agent{
     private JFrame frame;
 
     void setupGui(){
+        Object[] args = getArguments();
+        String arg = (String)args[0];
+        String[] argsSize = arg.split(" ");
+        String[] size = argsSize[0].split("-");
 
-        //TODO(make this parameters come from agent arguments)
-        int W = 10, H = 10;
+        int W =  Integer.parseInt(size[0]);
+        int H =  Integer.parseInt(size[1]);
 
         ColloredJButton button;
         matrix = new ColloredJButton[W][H];

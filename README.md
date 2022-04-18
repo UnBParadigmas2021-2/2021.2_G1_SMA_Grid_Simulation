@@ -37,10 +37,10 @@ Para executar o programa é necessário um sistema jade funcional na máquina e 
 Após isso utilize em usa configuração os seguintes parâmetros:
 
 ```
--gui -name main -agents MAIN:main("25-25 10-10")
+-gui -name main -agents MAIN:main("25-25")
 ```
 
-sendo os parâmetros da main o x-y referente ao grid, de forma a selecionar as células iniciais a estarem vivas.
+sendo os parâmetros da main o x-y referente ao grid, de forma a selecionar o tamanho do grid.
 
 ## Uso 
 
