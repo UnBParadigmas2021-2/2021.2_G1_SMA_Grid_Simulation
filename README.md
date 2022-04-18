@@ -24,7 +24,11 @@ Este projeto toma como base um "jogo" chamado game of life, que é um autómato 
 3. Qualquer célula morta com exatamente três vizinhos vivos se torna uma célula viva.
 4. Qualquer célula viva com dois ou três vizinhos vivos continua no mesmo estado para a próxima geração.
 
-## Screenshots
+## Screenshot
+
+### Programa em Execução
+
+![photo_2022-04-18_14-46-38](https://user-images.githubusercontent.com/88738347/163894010-df164bb6-386c-4228-b292-fa26b96b08cb.jpg)
 
 ## Instalação 
 **Linguagens**: Java<br>
