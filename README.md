@@ -26,7 +26,11 @@ Este projeto toma como base um "jogo" chamado game of life, que é um autómato 
 
 ## Screenshot
 
-### Programa em Execução
+### Programa em Execução (25x25)
+
+![photo_2022-04-18_14-46-30](https://user-images.githubusercontent.com/88738347/163894313-1c257813-e60f-43b9-8dbc-4cfa07942186.jpg)
+
+### Programa em Execução (50x50)
 
 ![photo_2022-04-18_14-46-38](https://user-images.githubusercontent.com/88738347/163894010-df164bb6-386c-4228-b292-fa26b96b08cb.jpg)
 
