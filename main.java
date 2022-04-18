@@ -24,9 +24,16 @@ public class main extends Agent {
 
         try {
 
-            dummy = cc.createNewAgent("GameOfLife", "GameOfLife", args);
+            dummy = cc.createNewAgent("GUI", "GameOfLifeAgent", args);
 
             dummy.start();
+
+            for(int i = 0; i < 10; ++i){
+                for(int j = 0; j < 10; ++j){
+                    AgentController agent = cc.createNewAgent(Integer.toString(i) + "-" + Integer.toString(j), "GridElementAgent", null);
+                    agent.start();
+                }
+            }
 
         } catch (StaleProxyException e) {
 

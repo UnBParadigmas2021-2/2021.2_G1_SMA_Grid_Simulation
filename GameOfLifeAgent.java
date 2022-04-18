@@ -19,26 +19,35 @@ class GameOfLifeBehaviour extends Behaviour{
 
             ACLMessage msg = myAgent.receive();
 
+            if(msg==null){
+                try{
+                    Thread.sleep(1000);
+                }catch(Exception ex){}
+                continue;
+            }
+
             System.out.println("Comportamento do agente ativado");
 
             // espera uma mensagem e pinta o quadrado
-            if(msg != null){
+
+            //someone whants to say that a state changed
+            if(msg.getPerformative() == ACLMessage.INFORM){
+
                 AID sender = msg.getSender();
                 String name = sender.getLocalName();
 
-                if(name.equals("Grid1")){
-                    System.out.println("Behaviour tried to set a elment to green");
-                    matrix[0][0].setBackground(Color.green);
-                }
+
+                int cord1 = Integer.parseInt(name.split("-")[0]);
+                int cord2 = Integer.parseInt(name.split("-")[1]);
+
+                System.out.println("Sender " + name + " sended the message " + msg.getContent());
+                if(msg.getContent().equals("ALIVE"))
+                    matrix[cord1][cord2].setBackground(Color.green);
+                else
+                    matrix[cord1][cord2].setBackground(Color.white);
             }
-
-            try{
-                Thread.sleep(1000);
-            }catch(Exception ex){}
-        }
+         }
     }
-
-
 
     public boolean done()
     {

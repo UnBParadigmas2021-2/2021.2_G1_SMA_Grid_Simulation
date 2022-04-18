@@ -20,6 +20,7 @@ class NotifyGuiBehaviour extends Behaviour
     {
 
         double randomN = Math.random();
+        System.out.println(randomN);
         if(randomN < 0.5){
             state = AgentState.ALIVE;
         }else
