@@ -33,33 +33,40 @@ class NotifyGuiBehaviour extends Behaviour
     }
 
     public void action(){ 
+
+        ACLMessage msg;
         stateChanged();
+
         while(true){
 
-            ACLMessage msg = myAgent.receive();
+            // Reply all queries about the state
+            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.QUERY_IF);
+            while((msg = myAgent.receive(mt)) != null){
+                ACLMessage replyMessage = msg.createReply();
+                replyMessage.setPerformative(ACLMessage.INFORM_IF);
+                replyMessage.setContent(getStateString());
 
-            switch(state){
-                case DEAD:
-                    // verify if is a propose to be alive
-                    if(msg != null && msg.getPerformative() == ACLMessage.PROPOSE){
-                        String content = msg.getContent();
+                myAgent.send(replyMessage);
+            }
 
-                        if(content == "BE ALIVE"){
-                            state = AgentState.ALIVE;
-                            stateChanged();
-                        }
-                    }
-                case ALIVE:
+            // Couting all response
+            mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM_IF);
+            int count = 0;
+            while((msg = myAgent.receive(mt)) != null){
+                if(msg.getContent().equals("ALIVE"))
+                    count++;
 
-                    // respond query if this is alive
-                    if(msg != null && msg.getPerformative() == ACLMessage.QUERY_IF)
-                    {
-                        ACLMessage replyMessage = msg.createReply();
-                        replyMessage.setContent(getStateString());
-                        myAgent.send(replyMessage);
-                    }
+            }
 
-                break;
+            count = (int)(Math.random()*(5-1+1) + 1);
+            System.out.println("Count: " + Integer.toString(count));
+
+            if(state == AgentState.ALIVE || count <= 1 || count <=4){
+               state = AgentState.DEAD;
+               stateChanged();
+            }else if(state == AgentState.DEAD || count == 3){
+                state = AgentState.ALIVE;
+                stateChanged();
             }
 
             sleep();

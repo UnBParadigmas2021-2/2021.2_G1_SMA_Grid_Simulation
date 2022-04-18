@@ -73,7 +73,7 @@ public class GameOfLifeAgent extends Agent{
     void setupGui(){
 
         //TODO(make this parameters come from agent arguments)
-        int W = 50, H = 50;
+        int W = 10, H = 10;
 
         ColloredJButton button;
         matrix = new ColloredJButton[W][H];
