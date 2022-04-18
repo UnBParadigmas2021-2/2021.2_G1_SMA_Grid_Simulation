@@ -94,10 +94,33 @@ public class GameOfLifeAgent extends Agent{
                 frame.add(button);
             }
         }
+        
+        
 
         frame.setLayout(new GridLayout(W, H));
         frame.setSize(1000, 800);
+        
+
         frame.setVisible(true);
+        
+        frame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	ACLMessage msg = new ACLMessage(ACLMessage.CANCEL);
+            	AID aidSendTo;
+            	for(int i = 0; i<W; ++i){
+                    for(int j = 0; j<H; ++j){
+                    	aidSendTo = new AID(i + "-" + j, AID.ISLOCALNAME);
+                    	System.out.println(i + "-" + j);
+                    	msg.addReceiver(aidSendTo);
+                        msg.setContent("DIE!");
+                        send(msg);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -106,4 +129,7 @@ public class GameOfLifeAgent extends Agent{
         addBehaviour(new GameOfLifeBehaviour(matrix));
     }
 }
+
+
+
 

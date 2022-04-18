@@ -84,7 +84,13 @@ class NotifyGuiBehaviour extends Behaviour
                 state = AgentState.ALIVE;
                 stateChanged();
             }
-
+            
+            mt = MessageTemplate.MatchPerformative(ACLMessage.CANCEL);
+            msg = myAgent.receive(mt);
+           if(msg != null) {
+        	   myAgent.doDelete();
+        	   break;
+           }
         }
     }
 
