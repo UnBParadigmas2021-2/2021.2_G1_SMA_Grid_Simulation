@@ -40,10 +40,10 @@ Este projeto toma como base um "jogo" chamado game of life, que é um autómato 
 
 Para executar o programa é necessário um sistema jade funcional na máquina e o sdk 15+ do java.
 
-Após isso utilize em usa configuração os seguintes parâmetros:
+Após isso utilize em sua configuração os seguintes parâmetros:
 
 ```
--gui -name main -agents MAIN:main("25-25")
+  -gui -name main -agents MAIN:main("25-25")
 ```
 
 sendo os parâmetros da main o x-y referente ao grid, de forma a selecionar o tamanho do grid.
