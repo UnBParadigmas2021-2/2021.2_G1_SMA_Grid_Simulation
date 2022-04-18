@@ -83,7 +83,31 @@ public class GameOfLifeAgent extends Agent{
         matrix = new ColloredJButton[W][H];
 
         frame = new JFrame("Game of Life");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        frame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+            	ACLMessage msg = new ACLMessage(ACLMessage.CANCEL);
+            	AID aidSendTo;
+            	for(int i = 0; i<W; ++i){
+                    for(int j = 0; j<H; ++j){
+                    	aidSendTo = new AID(i + "-" + j, AID.ISLOCALNAME);
+                    	System.out.println(i + "-" + j);
+                    	msg.addReceiver(aidSendTo);
+                        msg.setContent("DIE!");
+                        send(msg);
+                    }
+                }
+            	msg = new ACLMessage(ACLMessage.CANCEL);
+            	aidSendTo = new AID("MAIN", AID.ISLOCALNAME);
+            	System.out.println("MAIN");
+            	msg.addReceiver(aidSendTo);
+                msg.setContent("DIE!");
+                send(msg);
+            }
+        });
 
         for(int i = 0; i<W; ++i){
             for(int j = 0; j<H; ++j){
@@ -103,24 +127,7 @@ public class GameOfLifeAgent extends Agent{
 
         frame.setVisible(true);
         
-        frame.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-            	ACLMessage msg = new ACLMessage(ACLMessage.CANCEL);
-            	AID aidSendTo;
-            	for(int i = 0; i<W; ++i){
-                    for(int j = 0; j<H; ++j){
-                    	aidSendTo = new AID(i + "-" + j, AID.ISLOCALNAME);
-                    	System.out.println(i + "-" + j);
-                    	msg.addReceiver(aidSendTo);
-                        msg.setContent("DIE!");
-                        send(msg);
-                    }
-                }
-            }
-        });
+
     }
 
 

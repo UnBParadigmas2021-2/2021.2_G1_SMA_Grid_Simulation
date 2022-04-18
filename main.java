@@ -1,5 +1,7 @@
 import jade.core.Agent;
 import jade.core.Runtime;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.*;
@@ -43,6 +45,16 @@ public class main extends Agent {
 
             e.printStackTrace();
 
+        }
+        
+        while (true) {
+        	MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CANCEL);
+        	ACLMessage msg = this.receive(mt);
+           if(msg != null) {
+        	   System.out.println("MAIN dies!");
+        	   this.doDelete();
+        	   break;
+           }
         }
     }
 }
