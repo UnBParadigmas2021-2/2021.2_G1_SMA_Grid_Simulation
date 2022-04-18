@@ -7,7 +7,6 @@
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| 18/0138596  | Tomás Veloso Peixoto Matutino  | 
 | 18/0100840  | Gabriel Azevedo Batalha        |
 | 18/0054082  | Marcelo Victor de Sousa Silva  |
 | 17/0115208  | Victor Levi Peixoto            | 
