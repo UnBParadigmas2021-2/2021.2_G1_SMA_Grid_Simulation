@@ -4,168 +4,168 @@ import jade.core.behaviours.*;
 
 import java.lang.Math;
 
-interface GridElement{
-    boolean isAlive();
-    void canBeAlive();
+interface GridElement {
+	boolean isAlive();
+
+	void canBeAlive();
 }
 
-class NotifyGuiBehaviour extends Behaviour
-{
-    static final int SLEEP_SECS = 5;
-    static final String GUIAgent = "GUI";
-    private enum AgentState {DEAD, ALIVE};
-    private AgentState state;
+class NotifyGuiBehaviour extends Behaviour {
+	static final int SLEEP_SECS = 5;
+	static final String GUIAgent = "GUI";
 
-    public NotifyGuiBehaviour()
-    {
+	private enum AgentState {
+		DEAD, ALIVE
+	};
 
-        double randomN = Math.random();
-        System.out.println(randomN);
-        if(randomN < 0.5){
-            state = AgentState.ALIVE;
-        }else
-            state = AgentState.DEAD;
+	private AgentState state;
 
-    }
+	public NotifyGuiBehaviour() {
 
-    private String getStateString(){
-        return (state == AgentState.ALIVE)? "ALIVE" : "DEAD";
-    }
+		double randomN = Math.random();
+		System.out.println(randomN);
+		if (randomN < 0.5) {
+			state = AgentState.ALIVE;
+		} else
+			state = AgentState.DEAD;
 
-    public void action(){ 
+	}
 
-        ACLMessage msg;
-        stateChanged();
+	private String getStateString() {
+		return (state == AgentState.ALIVE) ? "ALIVE" : "DEAD";
+	}
 
-        while(true){
+	public void action() {
 
-            notifyNeighbors();
+		ACLMessage msg;
+		stateChanged();
 
-            // Reply all queries about the state
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.QUERY_IF);
+		while (true) {
 
-            msg = myAgent.receive(mt);
-            while(msg != null){
+			notifyNeighbors();
 
-                System.out.println("I received a message QUERY_IF "+ msg.getContent());
-                ACLMessage replyMessage = msg.createReply();
-                replyMessage.setPerformative(ACLMessage.INFORM_IF);
-                replyMessage.setContent(getStateString());
+			// Reply all queries about the state
+			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.QUERY_IF);
 
-                myAgent.send(replyMessage);
+			msg = myAgent.receive(mt);
+			while (msg != null) {
 
-                msg = myAgent.receive(mt);
-            }
+				System.out.println("I received a message QUERY_IF " + msg.getContent());
+				ACLMessage replyMessage = msg.createReply();
+				replyMessage.setPerformative(ACLMessage.INFORM_IF);
+				replyMessage.setContent(getStateString());
 
-            sleep();
+				myAgent.send(replyMessage);
 
-            // Couting all response
-            mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM_IF);
-            int count = 0;
-            msg = myAgent.receive(mt);
-            while(msg != null){
+				msg = myAgent.receive(mt);
+			}
 
-                System.out.println("I received a message "+ msg.getContent());
-                if(msg.getContent().equals("ALIVE"))
-                    count++;
+			sleep();
 
-                msg = myAgent.receive(mt);
-            }
+			// Couting all response
+			mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM_IF);
+			int count = 0;
+			msg = myAgent.receive(mt);
+			while (msg != null) {
 
-            //TODO remover 
-            //count = (int)(Math.random()*(5-1+1) + 1);
+				System.out.println("I received a message " + msg.getContent());
+				if (msg.getContent().equals("ALIVE"))
+					count++;
 
-            System.out.println("Count: " + Integer.toString(count));
+				msg = myAgent.receive(mt);
+			}
 
-            if(state == AgentState.ALIVE || count <= 1 || count >=4){
-               state = AgentState.DEAD;
-               stateChanged();
-            }else if(state == AgentState.DEAD || count == 3){
-                state = AgentState.ALIVE;
-                stateChanged();
-            }
-            
-            mt = MessageTemplate.MatchPerformative(ACLMessage.CANCEL);
-            msg = myAgent.receive(mt);
-           if(msg != null) {
-        	   myAgent.doDelete();
-        	   break;
-           }
-        }
-    }
+			// TODO remover
+			// count = (int)(Math.random()*(5-1+1) + 1);
 
-    private void stateChanged(){
-        System.out.println("Agent " + myAgent.getLocalName() + " reporting new state to " + GUIAgent);
+			System.out.println("Count: " + Integer.toString(count));
 
-        // Update my state on GUI
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.setContent(getStateString());
-        msg.addReceiver(new AID(GUIAgent, AID.ISLOCALNAME));
+			if (state == AgentState.ALIVE || count <= 1 || count >= 4) {
+				state = AgentState.DEAD;
+				stateChanged();
+			} else if (state == AgentState.DEAD || count == 3) {
+				state = AgentState.ALIVE;
+				stateChanged();
+			}
 
-        myAgent.send(msg);
-    }
+			mt = MessageTemplate.MatchPerformative(ACLMessage.CANCEL);
+			msg = myAgent.receive(mt);
+			if (msg != null) {
+				myAgent.doDelete();
+				break;
+			}
+		}
+	}
 
-    String generateAgentName(int x, int y){
-        return Integer.toString(x) + "-" + Integer.toString(y);
-    }
+	private void stateChanged() {
+		System.out.println("Agent " + myAgent.getLocalName() + " reporting new state to " + GUIAgent);
 
-    private void notifyNeighbors(){
+		// Update my state on GUI
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		msg.setContent(getStateString());
+		msg.addReceiver(new AID(GUIAgent, AID.ISLOCALNAME));
 
-        String name = myAgent.getLocalName();
-        AID aidSendTo;
+		myAgent.send(msg);
+	}
 
-        String args[] = name.split("-");
-        int cord1 = Integer.parseInt(args[0]);
-        int cord2 = Integer.parseInt(args[1]);
+	String generateAgentName(int x, int y) {
+		return Integer.toString(x) + "-" + Integer.toString(y);
+	}
 
-        for(int i = -1; i <= 1; ++i)
-            for(int j = -1; j <= 1; ++j){
-                ACLMessage message = new ACLMessage(ACLMessage.QUERY_IF);
+	private void notifyNeighbors() {
 
-                if(i!=0 || j!=0){
-                    aidSendTo = new AID(generateAgentName(cord1 + i , cord1 + j), AID.ISLOCALNAME);
+		String name = myAgent.getLocalName();
+		AID aidSendTo;
 
-                    System.out.println("Notificando " + aidSendTo.getLocalName());
+		String args[] = name.split("-");
+		int cord1 = Integer.parseInt(args[0]);
+		int cord2 = Integer.parseInt(args[1]);
 
+		for (int i = -1; i <= 1; ++i)
+			for (int j = -1; j <= 1; ++j) {
+				ACLMessage message = new ACLMessage(ACLMessage.QUERY_IF);
 
-                    message.addReceiver(aidSendTo);
-                    message.setContent("ALIVE?");
+				if (i != 0 || j != 0) {
+					aidSendTo = new AID(generateAgentName(cord1 + i, cord1 + j), AID.ISLOCALNAME);
 
-                    myAgent.send(message);
-                }
-            }
+					System.out.println("Notificando " + aidSendTo.getLocalName());
 
-    }
+					message.addReceiver(aidSendTo);
+					message.setContent("ALIVE?");
 
-    void sleep(){
-        try{
-            Thread.sleep(SLEEP_SECS*1000);
-        }catch(InterruptedException ex){}
-    }
+					myAgent.send(message);
+				}
+			}
 
+	}
 
-    public boolean done(){
-        return true;
-    }
+	void sleep() {
+		try {
+			Thread.sleep(SLEEP_SECS * 1000);
+		} catch (InterruptedException ex) {
+		}
+	}
+
+	public boolean done() {
+		return true;
+	}
 }
 
-public class GridElementAgent extends Agent
-{
-    protected void setup(){
+public class GridElementAgent extends Agent {
+	protected void setup() {
 
-        Object[] args = getArguments();
+		Object[] args = getArguments();
 
-        // TODO will be greate to have system out in a logging structure
-        System.out.println("GridElementAgent started with name: " + getLocalName());
+		// TODO will be greate to have system out in a logging structure
+		System.out.println("GridElementAgent started with name: " + getLocalName());
 
-        if(args != null && args.length > 0){
+		if (args != null && args.length > 0) {
 
-            for(Object arg : args){
-                System.out.println("Argument: " + (String) arg);
-            }
-        }
+			for (Object arg : args) {
+				System.out.println("Argument: " + (String) arg);
+			}
+		}
 
-        addBehaviour(new NotifyGuiBehaviour());
-    }
+		addBehaviour(new NotifyGuiBehaviour());
+	}
 }
-
