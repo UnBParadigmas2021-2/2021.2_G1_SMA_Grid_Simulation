@@ -78,9 +78,9 @@ Escolha os parâmetros iniciais e visualize como as células interagem entre si,
 
 ## Vídeo
 
-[Vídeo de apresentação](../assets/apresentacao_equipe.mp4)
+[Vídeo de apresentação](https://github.com/UnBParadigmas2021-2/2021.2_G1_SMA_Grid_Simulation/blob/readme-update/assets/apresentacao_equipe.mp4)
 
-[Demonstração do projeto](../assets/demonstracao_programa.mp4)
+[Demonstração do projeto](https://github.com/UnBParadigmas2021-2/2021.2_G1_SMA_Grid_Simulation/blob/readme-update/assets/demonstracao_programa.mp4)
 
 ## Outros 
 Caso execute o programa *sem* a GUI do JADE, será necessário encerrá-lo usando
