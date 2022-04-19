@@ -38,9 +38,9 @@ Este projeto toma como base um "jogo" chamado Game of Life, que é um autômato 
 **Linguagens**: Java<br>
 **Tecnologias**: Jade<br>
 
-Para executar o programa é necessário um sistema jade funcional na máquina e o sdk 15+ do java.
+Para executar o programa é necessário um sistema JADE funcional na máquina e o JDK 15 ou superior.
 
-Após isso utilize em sua configuração os seguintes parâmetros:
+Após isso utilize os seguintes argumentos:
 
 ```
   -gui -name main -agents MAIN:main("25-25")
@@ -54,6 +54,23 @@ correspondente:
   -name main -agents MAIN:main("25-25")
 ```
 
+### Observações
+É necessário ter o *classpath* corretamente especificado para executar o
+projeto, além da necessidade de escapar corretamente os caracteres especiais.
+
+Em um sistema GNU/Linux, caso o JADE já esteja especificando uma variável de
+ambiente, esta pode ser expandida temporariamente no terminal, por exemplo, caso
+esteja no diretório do projeto:
+
+```bash
+JADE_CP="${JADE_CP}:$(pwd)"
+```
+
+Um exemplo de linha de comando escapada corretamente em Bash é
+
+```bash
+java -cp "${JADE_CP}" jade.Boot -name main -agents "MAIN:main(25-25)"
+```
 
 ## Uso 
 
@@ -63,8 +80,9 @@ Escolha os parâmetros iniciais e visualize como as células interagem entre si,
 
 ## Outros 
 Caso execute o programa *sem* a GUI do JADE, será necessário encerrá-lo usando
-o terminal, enviando um SIGKIll ao processo. Caso não realize essa ação, o JADE
-continuará em execução e recusará iniciar o programa novamente.
+o terminal, enviando um SIGKILL ao processo, por exemplo, usando o comando `kill`
+ou SIGINT, enviado ao apertar Ctrl-C no terminal. Caso não realize essa ação,
+o JADE continuará em execução e recusará iniciar o programa novamente.
 
 ## Fontes
 
