@@ -17,7 +17,7 @@
 
 ## Sobre 
 
-Este projeto toma como base um "jogo" chamado game of life, que é um autómato celular desenvolvido pelo matemático John Horton Conway. Este jogo consiste em uma série de células que se reproduzem ou morrem de acordo com 4 regras.
+Este projeto toma como base um "jogo" chamado Game of Life, que é um autômato celular desenvolvido pelo matemático John Horton Conway. Este jogo consiste em uma série de células que se reproduzem ou morrem de acordo com 4 regras.
 
 1. Qualquer célula viva com menos de dois vizinhos vivos morre de solidão.
 2. Qualquer célula viva com mais de três vizinhos vivos morre de superpopulação.
@@ -62,6 +62,9 @@ Escolha os parâmetros iniciais e visualize como as células interagem entre si,
 ## Vídeo
 
 ## Outros 
+Caso execute o programa *sem* a GUI do JADE, será necessário encerrá-lo usando
+o terminal, enviando um SIGKIll ao processo. Caso não realize essa ação, o JADE
+continuará em execução e recusará iniciar o programa novamente.
 
 ## Fontes
 
