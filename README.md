@@ -1,11 +1,12 @@
-# WORDLE Game
+# Conway's Game Of Life
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
 **Nro do Grupo**: 01<br>
 **Paradigma**: Sistemas Multiagentes<br>
 
 ## Alunos
-|Matrícula | Aluno |
+
+| Matrícula | Aluno |
 | -- | -- |
 | 18/0100840  | Gabriel Azevedo Batalha        |
 | 18/0054082  | Marcelo Victor de Sousa Silva  |
@@ -15,7 +16,6 @@
 | 15/0058462  | Davi Antônio da Silva Santos   | 
 
 ## Sobre 
-Este projeto toma como base um jogo que tem se tornado muito popular na internet, o WORDLE que consiste em um jogo de palavras que tem como objetivo encontrar uma palavra a partir de chutes com palavras do mesmo tamanho e dicas que o próprio jogo oferece. 
 
 Este projeto toma como base um "jogo" chamado game of life, que é um autómato celular desenvolvido pelo matemático John Horton Conway. Este jogo consiste em uma série de células que se reproduzem ou morrem de acordo com 4 regras.
 
@@ -24,9 +24,15 @@ Este projeto toma como base um "jogo" chamado game of life, que é um autómato 
 3. Qualquer célula morta com exatamente três vizinhos vivos se torna uma célula viva.
 4. Qualquer célula viva com dois ou três vizinhos vivos continua no mesmo estado para a próxima geração.
 
-## Screenshots
+## Screenshot
 
+### Programa em Execução (25x25)
 
+![photo_2022-04-18_14-46-30](https://user-images.githubusercontent.com/88738347/163894313-1c257813-e60f-43b9-8dbc-4cfa07942186.jpg)
+
+### Programa em Execução (50x50)
+
+![photo_2022-04-18_14-46-38](https://user-images.githubusercontent.com/88738347/163894010-df164bb6-386c-4228-b292-fa26b96b08cb.jpg)
 
 ## Instalação 
 **Linguagens**: Java<br>
@@ -34,13 +40,20 @@ Este projeto toma como base um "jogo" chamado game of life, que é um autómato 
 
 Para executar o programa é necessário um sistema jade funcional na máquina e o sdk 15+ do java.
 
-Após isso utilize em usa configuração os seguintes parâmetros:
+Após isso utilize em sua configuração os seguintes parâmetros:
 
 ```
--gui -name main -agents MAIN:main("25-25")
+  -gui -name main -agents MAIN:main("25-25")
 ```
 
 sendo os parâmetros da main o x-y referente ao grid, de forma a selecionar o tamanho do grid.
+
+Caso não queira inicializar com o GUI do JADE, é só remover o argumento
+correspondente:
+```
+  -name main -agents MAIN:main("25-25")
+```
+
 
 ## Uso 
 
@@ -50,3 +63,14 @@ Escolha os parâmetros iniciais e visualize como as células interagem entre si,
 
 ## Outros 
 
+## Fontes
+
+MARTIN, Edwin. **Game of Life**. Disponível em: https://playgameoflife.com. Acesso em: 18 abr. 2022.
+
+NUMBERPHILE. **Inventing Game of Life (John Conway)**. Disponível em: https://www.youtube.com/watch?v=R9Plq-D1gEk. Acesso em: 18 abr. 2022.
+
+WIKIPEDIA. **Conway's Game of Life**. Disponível em: https://en.wikipedia.org/wiki/Conway's_Game_of_Life. Acesso em: 18 abr. 2022.
+
+GEEKSFORGEEKS. **Conway’s Game Of Life (Python Implementation)**. Disponível em: https://www.geeksforgeeks.org/conways-game-life-python-implementation/. Acesso em: 18 abr. 2022.
+
+JAVA Agent Development Framework. Disponível em: https://jade.tilab.com. Acesso em: 18 abr. 2022.
