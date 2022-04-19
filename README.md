@@ -48,6 +48,13 @@ Após isso utilize em sua configuração os seguintes parâmetros:
 
 sendo os parâmetros da main o x-y referente ao grid, de forma a selecionar o tamanho do grid.
 
+Caso não queira inicializar com o GUI do JADE, é só remover o argumento
+correspondente:
+```
+  -name main -agents MAIN:main("25-25")
+```
+
+
 ## Uso 
 
 Escolha os parâmetros iniciais e visualize como as células interagem entre si, seguindo as regras já citadas do jogo.
