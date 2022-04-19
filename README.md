@@ -78,6 +78,10 @@ Escolha os parâmetros iniciais e visualize como as células interagem entre si,
 
 ## Vídeo
 
+[Vídeo de apresentação](../assets/apresentacao_equipe.mp4)
+
+[Demonstração do projeto](../assets/demonstracao_programa.mp4)
+
 ## Outros 
 Caso execute o programa *sem* a GUI do JADE, será necessário encerrá-lo usando
 o terminal, enviando um SIGKILL ao processo, por exemplo, usando o comando `kill`
